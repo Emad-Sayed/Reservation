@@ -48,6 +48,7 @@ public class e_listLoader extends HttpServlet {
             Ob.put("E_LNAME", E.getLname());
             A.add(Ob);
             ArrayList<User> U = E.GetList();
+                        System.out.println("aaaaaaaaaaaaaaa"+U.size());
             if (U != null) 
             {
                 for(int i=0;i<U.size();i++)

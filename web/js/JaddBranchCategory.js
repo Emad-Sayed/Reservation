@@ -1,5 +1,32 @@
+window.onload = function ()
+{
+    LoadCategory();
+};
 var http = new XMLHttpRequest();
 
+function LoadCategory()
+{
+    http.onreadystatechange = PT;
+
+    function PT()
+    {
+
+        var data = http.responseText;
+        var obj = JSON.parse(data);
+        if (http.readyState == 4 && http.status == 200)
+        {
+            var Parent = document.getElementById("Category_");
+            for (var i = 1; i < obj.length; i++)
+            {
+                var L = document.createElement("option");
+                L.innerHTML = obj[i].CAT;
+                Parent.appendChild(L);
+            }
+        }
+    }
+    http.open("GeT", 'LoadCategory', true);
+    http.send(null);
+}
 function AddBranch()
 {
     http.onreadystatechange = PT;
@@ -32,7 +59,7 @@ function AddCategory()
             alert(data);
         }
     }
-    http.open("POST", 'm_addCategory?Name=' + document.getElementById("Cat_Name_").value,true);
+    http.open("POST", 'm_addCategory?Name=' + document.getElementById("Cat_Name_").value, true);
     http.send(null);
 }
 

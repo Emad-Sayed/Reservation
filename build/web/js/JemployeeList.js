@@ -32,7 +32,7 @@ function ListPage()
                 S.setAttribute("class", "badge");
                 //S.appendChild(B);
                 L.setAttribute("class", "list-group-item");
-                L.innerHTML = obj[i].FNAME + " " + obj[i].LNAME+" "+1;
+                L.innerHTML = obj[i].FNAME + " " + obj[i].LNAME+" ";
                 L.appendChild(S);
                 parent.appendChild(L);
             }
