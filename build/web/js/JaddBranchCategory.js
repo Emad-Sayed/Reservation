@@ -35,3 +35,5 @@ function AddCategory()
     http.open("POST", 'm_addCategory?Name=' + document.getElementById("Cat_Name_").value,true);
     http.send(null);
 }
+
+

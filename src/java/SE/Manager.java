@@ -76,8 +76,7 @@ public class Manager extends Person {
         H.put("Director", B.getDirector());
         H.put("phone", B.getPhone());
         H.put("Description", B.getDescription());
-        int Flag = -1;
-        Flag = DB.Insert("branches", H);
+        int Flag = DB.Insert("branches", H);
         return Flag;
     }
 

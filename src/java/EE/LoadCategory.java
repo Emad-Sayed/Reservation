@@ -5,25 +5,24 @@
  */
 package EE;
 
-import SE.Branch;
-import SE.Category;
-import SE.Manager;
 import SE.Sys;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
  * @author emad
  */
-@WebServlet(name = "m_addCategory", urlPatterns = {"/m_addCategory"})
-public class m_addCategory extends HttpServlet {
+@WebServlet(name = "LoadCategory", urlPatterns = {"/LoadCategory"})
+public class LoadCategory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,20 +37,19 @@ public class m_addCategory extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String Name=request.getParameter("Name");
-            if(!Validation.Validation.Get_Validations().Is_alpha(Name))
+            /* TODO output your page here. You may use following sample code. */
+            Sys S=Sys.GetSystem();
+                          System.out.println("Emaaaaaaaaaaa");
+            HashMap<String,String>result=S.LoadCategory();
+            JSONArray A=new JSONArray();
+            for(int i=0;i<result.size();i++)
             {
-                            response.getWriter().write("Invalid Data");
+              JSONObject Ob=new JSONObject();            
+              Ob.put("CAT", result.get(""+i));
+              System.out.println("Emaaaaaaaaaaa"+result.get(""+i));
+              A.add(Ob);
             }
-            else
-            {
-            Category C=new Category();
-            C.setName(Name);
-            HttpSession session = request.getSession();
-            Manager M = (Manager) session.getAttribute("Person");
-            M.AddCategory(C);
-            response.getWriter().write("Category Added");
-            }
+                        response.getWriter().write(A.toString());  
         }
     }
 

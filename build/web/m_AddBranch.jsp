@@ -1,5 +1,29 @@
 <jsp:include page="header.jsp" />      
+    <script>
+        window.onload=function LoadCategory()
+    {
+        http.onreadystatechange = PT;
 
+        function PT()
+        {
+
+            var data = http.responseText;
+            var obj  =JSON.parse(data);
+            if (http.readyState == 4 && http.status == 200)
+            {
+                var Parent=document.getElementById("Category_");
+                for (var i = 1; i < obj.length; i++)
+                {
+                    var L = document.createElement("option");
+                    L.innerHTML = obj[i].CAT ;
+                    Parent.appendChild(L);
+                }
+            }
+        }
+        http.open("GeT", 'LoadCategory',true);
+        http.send(null);
+    }
+</script>
 
             <!-- MAIN -->
             <main role="main">
@@ -25,9 +49,7 @@
                                 <label for="field2"><span>Category<span class="required">*</span></span>
                                     <div class="form-group">
                                         <select class="form-control" id="Category_" name="Category">
-                                            <option>Technical</option>
-                                            <option>Resturants</option>
-                                            <option>Government</option>
+                                            
                                         </select>
                                     </div>
                                 </label>

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package EE;
-
+import Validation.Validation;
 import SE.Branch;
 import SE.Manager;
 import SE.Sys;
@@ -43,7 +43,14 @@ public class m_addBranch extends HttpServlet {
             String Phone=request.getParameter("Phone");
             String Des=request.getParameter("Description");
             String Category=request.getParameter("Category");
-        Sys S=Sys.GetSystem();
+            Validation V=Validation.Get_Validations();
+            if(!V.Is_alpha(Name)||!V.Is_alpha(Director)||!V.Is_alpha(Des)||!V.Is_digit(Phone))
+            {
+            response.getWriter().write("Invalid Data");                   
+            }
+            else
+            {
+            Sys S=Sys.GetSystem();
             int Cat_ID=S.GetCategoryID(Category);
             Branch B=new Branch();
             B.setName(Name);
@@ -54,7 +61,9 @@ public class m_addBranch extends HttpServlet {
             HttpSession session = request.getSession();
             Manager M = (Manager) session.getAttribute("Person");
             M.AddBranch(B);
-            response.getWriter().write("Branch Added");            
+            response.getWriter().write("Branch Added");   
+            }
+           
         }
     }
 

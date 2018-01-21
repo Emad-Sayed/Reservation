@@ -6,9 +6,11 @@
 package EE;
 
 import SE.Branch;
+import Validation.Validation;
 import SE.Employee;
 import SE.Manager;
 import SE.Sys;
+import com.sun.xml.ws.developer.MemberSubmissionAddressing;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -47,7 +49,14 @@ public class m_addEmployee extends HttpServlet {
             String Branch=request.getParameter("Branch");  
             String Phone=request.getParameter("Phone"); 
             System.out.println("111111111111"+Phone);
-        Sys S=Sys.GetSystem();
+            Sys S=Sys.GetSystem();
+            Validation V=Validation.Get_Validations();
+            if(!V.Is_alpha(Fname)||!V.Is_alpha(Lname)||!V.Is_email(Email)||!V.Is_passord(Password)||!V.Is_digit(Phone))
+            {
+            response.getWriter().write("Invalid Data"); 
+            }
+            else
+            {
             Employee E=new Employee();
             E.setBranchID(S.GetBranchID(Branch));
             E.setEmail(Email);
@@ -63,6 +72,7 @@ public class m_addEmployee extends HttpServlet {
             response.getWriter().write("Branch Already have Employee"); 
             else
             response.getWriter().write("Employee Added"); 
+            }
         }
     }
 
