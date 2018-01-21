@@ -38,15 +38,7 @@ public class User extends Person {
                 //law awl Wa7ed
         R=DB.Select("*","special_arrange","1");
         HashMap<String, String> In = new HashMap();        
-        if(R.isEmpty())
-        {
-        In.put("user_id", "" + this.getUserID());
-        In.put("branch_id", "" + Branch_ID);
-        In.put("branch_time_id", R.get(0).get("ID"));
-        In.put("user_number", "" + 1);
-        DB.Insert("arrange", In);    
-        return 1;
-        }
+
         R = DB.Select("ID", "branches_time", "branch_id=" + Branch_ID);
         In.put("user_id", "" + this.getUserID());
         In.put("branch_id", "" + Branch_ID);
@@ -95,7 +87,7 @@ public class User extends Person {
         In.put("branch_time_id", R.get(0).get("ID"));
         int LastPerson = DB.SelectMax("arrange", "user_number", "branch_id=" + Branch_ID);// a5er wa7ed 3leh el dor
          R = DB.Select("ID", "special_arrange", "branch_id=" + Branch_ID+" and user_number="+SelectedNumber); // el rkm dh mwgod wla la2
-        if(LastPerson>SelectedNumber||!R.isEmpty())
+        if(LastPerson>=SelectedNumber||!R.isEmpty())
             return -2; // Number Not Avialable
         In.put("user_number", "" + SelectedNumber);
         DB.Insert("special_arrange", In);        
@@ -116,6 +108,8 @@ public class User extends Person {
         DB_ DB = DB_.Get_DB_controller();
         DB.Connect();
         int Branch_ID = S.GetBranchID(BranchName);
-        return DB.Delete("arrange", "user_id=" + this.getUserID() + " and branch_id=" + Branch_ID);
+        DB.Delete("arrange", "user_id=" + this.getUserID() + " and branch_id=" + Branch_ID);
+        DB.Delete("special_arrange", "user_id=" + this.getUserID() + " and branch_id=" + Branch_ID);  
+        return true;
     }
 }
