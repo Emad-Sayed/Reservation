@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author emad
  */
-@WebFilter(filterName = "LoginFirst", urlPatterns = {"/home.jsp","/about-us.jsp","/about-us.jsp"})
-public class LoginFirst implements Filter {
+@WebFilter(filterName = "EmployeeRoles", urlPatterns = {"/e_listView.jsp", "/e_timeManager.jsp", "/employee_page.jsp"})
+public class EmployeeRoles implements Filter {
     
     private static final boolean debug = true;
 
@@ -34,7 +34,7 @@ public class LoginFirst implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
     
-    public LoginFirst() {
+    public EmployeeRoles() {
     }    
     
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
@@ -44,17 +44,21 @@ public class LoginFirst implements Filter {
        try
        {
                 HttpSession session = req.getSession();           
-           int ID=(Integer)session.getAttribute("Person_ID");
+           int PersonType=(Integer)session.getAttribute("Person_Type");
+           if(PersonType!=3)
+           res.sendRedirect("index.jsp");
        }
        catch(Exception E)
        {
            res.sendRedirect("index.jsp");
-       }        
+       }  
     }    
     
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
-
+        if (debug) {
+            log("EmployeeRoles:DoAfterProcessing");
+        }
 
         // Write code here to process the request and/or response after
         // the rest of the filter chain is invoked.
@@ -89,7 +93,7 @@ public class LoginFirst implements Filter {
             throws IOException, ServletException {
         
         if (debug) {
-            log("LoginFirst:doFilter()");
+            log("EmployeeRoles:doFilter()");
         }
         
         doBeforeProcessing(request, response);
@@ -149,7 +153,7 @@ public class LoginFirst implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
-                log("LoginFirst:Initializing filter");
+                log("EmployeeRoles:Initializing filter");
             }
         }
     }
@@ -160,9 +164,9 @@ public class LoginFirst implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("LoginFirst()");
+            return ("EmployeeRoles()");
         }
-        StringBuffer sb = new StringBuffer("LoginFirst(");
+        StringBuffer sb = new StringBuffer("EmployeeRoles(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
