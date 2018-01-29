@@ -7,7 +7,7 @@
                 <article>
                     <header class="section background-white">
                         <div style=" margin: 0 auto; width: 250px;text-align: center"> 
-                           <h3>Vodafone Waiting List</h3> 
+                           <h3>Waiting List</h3> 
                            <h3 id="name" ></h3> 
                         </div>
                         <form>

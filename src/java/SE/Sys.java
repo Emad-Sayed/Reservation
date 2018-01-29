@@ -39,7 +39,7 @@ public class Sys {
         }
     }
 
- /*   public boolean FileUpload(String Path, FileItemStream item) {
+    /*   public boolean FileUpload(String Path, FileItemStream item) {
         File f = new File(Path + File.separator + "image");
         if (!f.exists()) {
             f.mkdir();
@@ -65,7 +65,7 @@ public class Sys {
         }
         return false;
     }
-*/
+     */
     public int Login(String Mail, String Password) {
         DB_ DB = DB_.Get_DB_controller();
         DB.Connect();
@@ -194,6 +194,8 @@ public class Sys {
         U.setEmail(H.get(0).get("mail"));
         U.setFname(H.get(0).get("fname"));
         U.setLname(H.get(0).get("lname"));
+        U.setPhone(H.get(0).get("phone"));
+
         U.setPassword(H.get(0).get("password"));
         U.setSecretWord(H.get(0).get("SECRET_WORD"));
         U.setType(Integer.parseInt(H.get(0).get("TYPE_ID")));
@@ -210,6 +212,7 @@ public class Sys {
         M.setEmail(H.get(0).get("mail"));
         M.setFname(H.get(0).get("fname"));
         M.setLname(H.get(0).get("lname"));
+        M.setPhone(H.get(0).get("phone"));
         M.setPassword(H.get(0).get("password"));
         M.setSecretWord(H.get(0).get("SECRET_WORD"));
         M.setType(Integer.parseInt(H.get(0).get("TYPE_ID")));
@@ -226,6 +229,8 @@ public class Sys {
         E.setEmail(H.get(0).get("mail"));
         E.setFname(H.get(0).get("fname"));
         E.setLname(H.get(0).get("lname"));
+        E.setPhone(H.get(0).get("phone"));
+
         E.setPassword(H.get(0).get("password"));
         E.setSecretWord(H.get(0).get("SECRET_WORD"));
         E.setType(Integer.parseInt(H.get(0).get("TYPE_ID")));
@@ -252,12 +257,9 @@ public class Sys {
         DB_ DB = DB_.Get_DB_controller();
         DB.Connect();
         ArrayList<HashMap<String, String>> R = DB.Select("ID", "branches", "name='" + Branch + "'");
-        try
-        {
-        return Integer.parseInt(R.get(0).get("ID"));
-        }
-        catch(Exception E)
-        {
+        try {
+            return Integer.parseInt(R.get(0).get("ID"));
+        } catch (Exception E) {
             return -1;
         }
     }
@@ -293,13 +295,14 @@ public class Sys {
         }
         return true;
     }
-    public int GetEmployeeID(String BranchName)
-    {
-        DB_ DB=DB_.Get_DB_controller();
+
+    public int GetEmployeeID(String BranchName) {
+        DB_ DB = DB_.Get_DB_controller();
         DB.Connect();
-        int BranchID=this.GetBranchID(BranchName);
-        if(BranchID==-1)
+        int BranchID = this.GetBranchID(BranchName);
+        if (BranchID == -1) {
             return -1;
+        }
         ArrayList<HashMap<String, String>> R = DB.Select("*", "employee_branch", "Branch_ID=" + BranchID);
         return Integer.parseInt(R.get(0).get("Emp_ID"));
 

@@ -42,7 +42,7 @@ public class DB_ {
             DB_Access = DriverManager.getConnection("jdbc:mysql://localhost:3306/reservation?zeroDateTimeBehavior=convertToNull", "root", "");
 
         } catch (Exception x) {
-            System.err.println(x.getMessage());
+            System.err.println("Error DB Connection "+x.getMessage());
         }
     }
 

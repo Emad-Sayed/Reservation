@@ -16,15 +16,15 @@
                             <div class="form-style-2-heading">Profile Information</div>
 
                             <form  method="post">
-                                <label for="field1"><span> First Name  <span class="required">*</span></span><input id='Name_' type="text" class="input-field" name="Name" value="" /></label>
-                                      <label for="field1"><span>Last Name  <span class="required">*</span></span><input id='Director_' type="text" class="input-field" name="Director" value="" /></label>
-                                <label for="field1"><span> Phone  <span class="required">*</span></span><input id='Phone_' type="text" class="input-field" name="Phone" value="" /></label>
+                                <label for="field1"><span> First Name  <span class="required">*</span></span><input id='FNAME' type="text" class="input-field" name="Name" value="" /></label>
+                                      <label for="field1"><span>Last Name  <span class="required">*</span></span><input id='LNAME' type="text" class="input-field" name="Director" value="" /></label>
+                                <label for="field1"><span> Phone  <span class="required">*</span></span><input id='PHONE' type="text" class="input-field" name="Phone" value="" /></label>
                           
-                                <label for="field2"><span> User Type  <span class="required">*</span></span><input id='Description_' type="text" class="input-field" name="Description" value="" /></label>
+                                <label for="field2"><span> User Type  <span class="required">*</span></span><input id='TYPE' type="text" class="input-field" name="Description" value="" readonly/></label>
 
 
                                     <div style="margin-top: 50px"class="center">
-                                        <button  onclick="AddBranch()" type="button" class="btn green_">Update</button>
+                                        <button  onclick="Update()" type="button" class="btn green_">Update</button>
                                     </div>
 
                             </form>
@@ -37,7 +37,7 @@
                                 <label for="field1"><span> New Password  <span class="required">*</span></span><input id='Cat_Name_' type="text" class="input-field" name="field1" value="" /></label>
 
                                     <div style="margin-top: 85px"class="center">
-                                        <button onclick="AddCategory()" type="button" class="btn btn-danger">Change Password</button>                                    
+                                        <button onclick="ChangePassword()" type="button" class="btn btn-danger">Change Password</button>                                    
                                     </div>
 
                             </form>
@@ -49,6 +49,6 @@
             <div style="clear: both"></div>
             <!-- FOOTER -->
 <jsp:include page="footer.jsp" />   
-<script type="text/javascript" src="js/JaddBranchCategory.js"></script> 
+<script type="text/javascript" src="js/JProfile.js"></script> 
 </body>
 </html>

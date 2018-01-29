@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -39,7 +41,17 @@ public class Profile extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
- 
+            HttpSession session = request.getSession();
+            Person P = (Person) session.getAttribute("Person");
+            JSONArray A = new JSONArray();
+            JSONObject Ob = new JSONObject();
+            Ob.put("FNAME",P.getFname());
+            Ob.put("LNAME",P.getLname());
+            Ob.put("PHONE",P.getPhone());
+            System.out.println(P.getPhone()+" aaaaaaaaa");
+            Ob.put("TYPE",P.getType());
+            A.add(Ob);
+            response.getWriter().write(A.toString());
         }
     }
 
