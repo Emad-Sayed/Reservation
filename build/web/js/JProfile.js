@@ -26,7 +26,19 @@ function Profile()
 }
 function Update()
 {
+    http.onreadystatechange = PT;
+    function PT()
+    {
 
+        var data = http.responseText;
+        if (http.readyState == 4 && http.status == 200)
+        {
+            alert(data);
+        }
+    }
+    http.open("POST",'UpdatePerson?FNAME='+document.getElementById("FNAME").value+'&LNAME='+document.getElementById("LNAME").value+'&PHONE='+document.getElementById("PHONE").value, true);
+
+    http.send(null);
 }
 function ChangePassword()
 {

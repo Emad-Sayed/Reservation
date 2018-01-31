@@ -5,10 +5,9 @@
  */
 package EE;
 
-import SE.Employee;
-import SE.Manager;
 import SE.Sys;
 import SE.User;
+import Validation.Validation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -20,10 +19,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author emad
+ * @author emad_
  */
-@WebServlet(name = "Login_manager", urlPatterns = {"/Login_manager"})
-public class Login_manager extends HttpServlet {
+@WebServlet(name = "Regist", urlPatterns = {"/Regist"})
+public class Regist extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,40 +37,35 @@ public class Login_manager extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            response.setContentType("text/html");
-            Sys S = Sys.GetSystem();
-            String ipAddress = request.getRemoteAddr();
-                boolean Flag = false;
-            int ID = S.Login(request.getParameter("mail"), request.getParameter("pass"));
-            if (ID != -1) {
-                Flag = true;
+            String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+            System.out.println(gRecaptchaResponse);
+            boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+            System.out.println("goooooooooogle " + verify);
+            String Fname = request.getParameter("FN");
+            String Lname = request.getParameter("LN");
+            String Email = request.getParameter("EM");
+            String Pass = request.getParameter("PA");
+            System.out.println(Fname + "   " + Lname + "  " + Email + "  " + Pass);
+            Validation V = Validation.Get_Validations();
+            if (verify && V.Is_alpha(Fname) && V.Is_alpha(Lname) && V.Is_email(Email)) {
                 HttpSession session = request.getSession();
-                int UserType = S.GetUserType(ID);
-                if (UserType == 1)//Manager
-                {
-                    session.setAttribute("flag", 1);
-                    Manager M = S.LoadManagerData(ID);
-                    session.setAttribute("Person_ID", ID);
-                    session.setAttribute("Person_Type", UserType);
-                    session.setAttribute("Person", M);
-                } else if (UserType == 2)//User
-                {
-                    session.setAttribute("flag", 1);
-                    User U = S.LoadUserData(ID);
-                    session.setAttribute("Person_ID", ID);
-                    session.setAttribute("Person_Type", UserType);
-                    session.setAttribute("Person", U);
-                } else if (UserType == 3)//Employee
-                {
-                    session.setAttribute("flag", 1);
-                    Employee E = S.LoadEmployeeData(ID);
-                    session.setAttribute("Person_ID", ID);
-                    session.setAttribute("Person_Type", UserType);
-                    session.setAttribute("Person", E);
-                }
+                session.setAttribute("flag", 1);
+                Sys S=Sys.GetSystem();
+                User U=new User();
+                U.setEmail(Email);
+                U.setPassword(Pass);
+                U.setFname(Fname);
+                U.setLname(Lname);
+                U.setType(2);
+                U.setPhone("000");
+                int ID=S.AddUser(U);
+                session.setAttribute("Person_ID", ID);
+                session.setAttribute("Person_Type", 2);
+                session.setAttribute("Person", U);
+                response.sendRedirect("home.jsp");
             }
-            response.getWriter().write("" + Flag);
+            else
+                                response.sendRedirect("index.jsp");
 
         }
     }

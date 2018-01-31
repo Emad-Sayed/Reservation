@@ -307,5 +307,18 @@ public class Sys {
         return Integer.parseInt(R.get(0).get("Emp_ID"));
 
     }
+       public int AddUser(User U) {
+        DB_ DB = DB_.Get_DB_controller();
+        DB.Connect();
+        HashMap<String, String> Values = new HashMap();
+        Values.put("mail", U.getEmail());
+        Values.put("password", U.getPassword());
+        Values.put("fname", U.getFname());
+        Values.put("lname", U.getLname());
+        Values.put("phone", U.getPhone());        
+        Values.put("TYPE_ID", "2");
+        
+        return DB.Insert("user_", Values);
+    }
 }
 //SELECT * FROM `branches_time` WHERE time_from <"20:22:22" and time_to>"20:22:22" and branch_id=1

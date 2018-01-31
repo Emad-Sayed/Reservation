@@ -5,12 +5,13 @@
  */
 package EE;
 
-import SE.Employee;
 import SE.Manager;
+import SE.Person;
 import SE.Sys;
-import SE.User;
+import Validation.Validation;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +21,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author emad
+ * @author emad_
  */
-@WebServlet(name = "Login_manager", urlPatterns = {"/Login_manager"})
-public class Login_manager extends HttpServlet {
+@WebServlet(name = "UpdatePerson", urlPatterns = {"/UpdatePerson"})
+public class UpdatePerson extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,39 +40,30 @@ public class Login_manager extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            response.setContentType("text/html");
-            Sys S = Sys.GetSystem();
-            String ipAddress = request.getRemoteAddr();
-                boolean Flag = false;
-            int ID = S.Login(request.getParameter("mail"), request.getParameter("pass"));
-            if (ID != -1) {
-                Flag = true;
-                HttpSession session = request.getSession();
-                int UserType = S.GetUserType(ID);
-                if (UserType == 1)//Manager
-                {
-                    session.setAttribute("flag", 1);
-                    Manager M = S.LoadManagerData(ID);
-                    session.setAttribute("Person_ID", ID);
-                    session.setAttribute("Person_Type", UserType);
-                    session.setAttribute("Person", M);
-                } else if (UserType == 2)//User
-                {
-                    session.setAttribute("flag", 1);
-                    User U = S.LoadUserData(ID);
-                    session.setAttribute("Person_ID", ID);
-                    session.setAttribute("Person_Type", UserType);
-                    session.setAttribute("Person", U);
-                } else if (UserType == 3)//Employee
-                {
-                    session.setAttribute("flag", 1);
-                    Employee E = S.LoadEmployeeData(ID);
-                    session.setAttribute("Person_ID", ID);
-                    session.setAttribute("Person_Type", UserType);
-                    session.setAttribute("Person", E);
-                }
+            String FNAME=request.getParameter("FNAME");
+            String LNAME=request.getParameter("LNAME");
+            String PHONE=request.getParameter("PHONE");
+            Validation V=Validation.Get_Validations();
+            if(V.Is_alpha(FNAME)&&V.Is_alpha(LNAME)&&V.Is_digit(PHONE))
+            {
+            HttpSession session = request.getSession();
+            Person P = (Person) session.getAttribute("Person");
+            int PersonID=(int) session.getAttribute("Person_ID");
+            HashMap<String,String>Data=new HashMap<>();
+            Data.put("ID",PersonID+"");
+            Data.put("FNAME", FNAME);
+            Data.put("LNAME", LNAME);
+            Data.put("PHONE", PHONE);
+            P.setFname(FNAME);
+            P.setLname(LNAME);
+            P.setPhone(PHONE);
+            P.UpdateProfile(Data);
+            session.setAttribute("Person",P);
+            response.getWriter().write("Information Modified");               
             }
-            response.getWriter().write("" + Flag);
+            else
+                            response.getWriter().write("Invalid information");               
+
 
         }
     }

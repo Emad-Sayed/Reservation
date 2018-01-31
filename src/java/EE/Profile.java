@@ -48,7 +48,6 @@ public class Profile extends HttpServlet {
             Ob.put("FNAME",P.getFname());
             Ob.put("LNAME",P.getLname());
             Ob.put("PHONE",P.getPhone());
-            System.out.println(P.getPhone()+" aaaaaaaaa");
             Ob.put("TYPE",P.getType());
             A.add(Ob);
             response.getWriter().write(A.toString());

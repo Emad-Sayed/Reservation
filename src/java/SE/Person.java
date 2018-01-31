@@ -5,6 +5,7 @@
  */
 package SE;
 
+import DB.DB_;
 import java.util.HashMap;
 
 /**
@@ -88,6 +89,12 @@ public class Person {
     
     public boolean UpdateProfile(HashMap<String,String> P)
     {
+        DB_ DB = DB_.Get_DB_controller();
+        DB.Connect();
+        DB.Update("user_","fname='"+P.get("FNAME")+"'","ID="+P.get("ID"));
+        DB.Update("user_","lname='"+P.get("LNAME")+"'","ID="+P.get("ID"));
+        DB.Update("user_","phone='"+P.get("PHONE")+"'","ID="+P.get("ID"));
+        
         return false;
     }
     public boolean ChnagePassword(String OldPass,String NewPass)
