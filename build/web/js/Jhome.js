@@ -14,7 +14,7 @@ function GetParagraphContent()
         var obj = JSON.parse(data);
         if (http.readyState == 4 && http.status == 200)
         {
-            for (var i = 0; i < data.length; i++)
+            for (var i = (obj.length-1); i >=0; i--)
             {
                 var title = document.createElement("h1");
                 title.setAttribute("class", "text-dark text-s-size-30 text-m-size-40 text-l-size-headline text-thin text-line-height-1");
